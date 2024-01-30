@@ -1,14 +1,12 @@
 package format.pex;
 
-@:enum
-abstract EmitterType(Int) from Int to Int
+enum abstract EmitterType(Int) from Int to Int
 {
 	var Gravity = 0;
 	var Radial = 1;
 }
 
-@:enum
-abstract BlendFunction(Int) from Int to Int
+enum abstract BlendFunction(Int) from Int to Int
 {
 	var Zero = 0;
 	var One = 1;

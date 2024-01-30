@@ -119,7 +119,7 @@ class Reg {
 
 typedef Swizzle = Null<Array<C>>; // length 1-4
 
-@:enum abstract C(Int) {
+enum abstract C(Int) {
 	var X = 0;
 	var Y = 1;
 	var Z = 2;

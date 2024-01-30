@@ -33,8 +33,7 @@ package format.as1;
  * Action code constants.
  * Not for public usage.
  */
-@:enum
-abstract ActionCode(Int) from Int to Int {
+enum abstract ActionCode(Int) from Int to Int {
 	var ActionEnd             = 0x00;
 	var ActionNextFrame       = 0x04;
 	var ActionPrevFrame       = 0x05;
