@@ -29,7 +29,21 @@ package format.tools;
 class Deflate {
 
 	public static function run( b : haxe.io.Bytes, ?level = 9 ) : haxe.io.Bytes {
-		#if (haxe_ver >= 3.2)
+		#if cs
+
+		// haxe.zip.Compress is not implemented on C#: a zlib stream (RFC 1950)
+		// around the raw deflate data of System.IO.Compression.DeflateStream
+		var out = new haxe.io.BytesOutput();
+		var stored : Bool = level == 0;
+		out.writeByte(0x78);
+		out.writeByte(stored ? 0x01 : 0xDA);
+		var raw : haxe.io.BytesData = untyped __cs__('((System.Func<byte[]>)(() => { var ms = new System.IO.MemoryStream(); using (var ds = new System.IO.Compression.DeflateStream(ms, {0} ? System.IO.Compression.CompressionLevel.NoCompression : System.IO.Compression.CompressionLevel.Optimal, true)) { ds.Write({1}, 0, {2}); } return ms.ToArray(); }))()', stored, b.getData(), b.length);
+		out.write(haxe.io.Bytes.ofData(raw));
+		out.bigEndian = true;
+		out.writeInt32(haxe.crypto.Adler32.make(b));
+		return out.getBytes();
+
+		#elseif (haxe_ver >= 3.2)
 
 		return haxe.zip.Compress.run(b,level);
 
