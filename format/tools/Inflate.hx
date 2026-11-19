@@ -29,12 +29,7 @@ package format.tools;
 class Inflate {
 
 	public static function run( bytes : haxe.io.Bytes ) {
-		#if cs
-
-		// haxe.zip.Uncompress is not implemented on C#
-		return InflateImpl.run(new haxe.io.BytesInput(bytes));
-
-		#elseif (haxe_ver >= 3.2)
+		#if (haxe_ver >= 3.2)
 
 		return haxe.zip.Uncompress.run(bytes);
 
